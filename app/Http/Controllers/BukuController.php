@@ -42,6 +42,7 @@ class BukuController extends Controller
      */
     public function index()
     {
+        Kategori::all();
         return view('Pages.Admin.Buku.Index', [
             'title' => 'Data Buku',
             'bukus' => Buku::latest()->paginate(6),
@@ -82,6 +83,11 @@ class BukuController extends Controller
             $validatedData['cover'] = $request->file('cover')->store('cover-buku');
         }
 
+        if($request->jumlah > 0 ){
+            $validatedData['keterangan'] = 'Tersedia';
+        } else {
+            $validatedData['keterangan'] = 'Tidak Tersedia';
+        }
         $validatedData['sinopsis'] = $request['sinopsis'];
         $validatedData['halaman'] = $request['halaman'];
         $validatedData['tahunRilis'] = $request['tahunRilis'];
@@ -102,6 +108,7 @@ class BukuController extends Controller
                 ]);
             }
         }
+
 
         Alert::toast('Data Buku Berhasil Ditambahkan!', 'success');
 

@@ -66,7 +66,9 @@
         </div>
     </div>
 
+ 
     <!-- General JS Scripts -->
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/apexcharts') }}"></script>
     <script src="{{ asset('assets/modules/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/modules/popper.js') }}"></script>
     <script src="{{ asset('assets/modules/tooltip.js') }}"></script>

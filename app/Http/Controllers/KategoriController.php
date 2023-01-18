@@ -44,7 +44,7 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nama' => 'required|unique:kategoris|max:5',
+            'nama' => 'required|unique:kategoris|max:50',
             'keterangan' => 'nullable|max:1000',
         ]);
 

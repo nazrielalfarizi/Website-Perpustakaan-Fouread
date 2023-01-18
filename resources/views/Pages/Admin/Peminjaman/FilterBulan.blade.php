@@ -9,7 +9,6 @@
         </div>
         <div class="d-flex justify-content-end">
             {{-- <a href="/exportPeminjaman" class="btn btn-outline-success mr-1">Export</a> --}}
-            <a href="/peminjaman/create" class="btn btn-icon btn-outline-success"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 

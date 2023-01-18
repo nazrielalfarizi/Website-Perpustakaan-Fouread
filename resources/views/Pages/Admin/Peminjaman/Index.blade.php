@@ -14,8 +14,9 @@
                     </select>
                 </form>
             @endif
+            @can('admin')            
             <a href="/exportPeminjaman" class="btn btn-outline-success mr-1">Export</a>
-            <a href="/peminjaman/create" class="btn btn-icon btn-outline-success"><i class="fas fa-plus"></i></a>
+            @endcan
         </div>
     </div>
 
@@ -36,7 +37,6 @@
                                         <th class="text-center">Jumlah Peminjaman</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Harus Dikembalikan</th>
-                                        <th class="text-center">Keterangan</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -55,7 +55,6 @@
                                             <td class="text-center">
                                                 {{ $peminjaman->tanggal == null ? '' : \Carbon\Carbon::parse($peminjaman->tanggal)->isoFormat('dddd, D MMMM Y') }}
                                             </td>
-                                            <td>{{ $peminjaman->keterangan }}</td>
                                             <td class="text-right d-flex justify-content-end">
                                                 <a href="/pengembalian/create/{{ $peminjaman->id }}"
                                                     class="btn btn-icon btn-outline-primary mr-1"><i
@@ -64,7 +63,7 @@
                                                     @method('delete')
                                                     @csrf
                                                     <button
-                                                        onclick="return confirm('Anda Yakin akan Menghapus Data peminjaman {{ $peminjaman->buku->judul }} oleh {{ $peminjaman->user->name }}?')"
+                                                        onclick="return confirm('Anda Yakin akan Menghapus Data peminjaman {{ $peminjaman->buku }} oleh {{ $peminjaman->user->name }}?')"
                                                         class="btn btn-icon btn-outline-danger"><i
                                                             class="fas fa-trash"></i></button>
                                                 </form>

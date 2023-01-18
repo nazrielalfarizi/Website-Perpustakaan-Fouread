@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('peminjamen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('buku_id');
+            $table->foreignId('buku_id')->constrained();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('jumlah');
             $table->integer('arsip');

@@ -4,7 +4,7 @@
             <a href="/">Perpustakaan</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="/">PERP</a>
+            <a href="/">LIB</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
@@ -12,6 +12,9 @@
                 <a class="nav-link" href="/"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
             @can('admin')
+            <li class="{{ Request::is('statistik', 'search*', 'profil*', 'myPeminjaman*') ? 'active' : '' }}">
+                <a class="nav-link" href="/statistik"><i class="fas fa-fire"></i><span>Statistik</span></a>
+            </li>
                 <li class="menu-header">Manajemen Data</li>
                 <li class="dropdown {{ Request::is('peminjaman*', 'pengembalian*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown">
@@ -56,12 +59,30 @@
                         </li>
                     </ul>
                 </li>
+                <li class="dropdown {{ Request::is('guru*', 'siswa*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Guest Book</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('guru*') ? 'active' : '' }}">
+                            <a class="nav-link" href="/guru">Guru</a>
+                        </li>
+                        <li class="{{ Request::is('siswa*') ? 'active' : '' }}">
+                            <a class="nav-link" href="/siswa">Siswa</a>
+                        </li>
+                    </ul>
+                </li>
             @endcan
             @can('wali-kelas')
                 <li class="menu-header">Pengawasan Siswa</li>
                 <li class="{{ Request::is('wali-kelas*') ? 'active' : '' }}">
                     <a class="nav-link" href="/wali-kelas/{{ auth()->user()->kelas_id }}">
                         <i class="fas fa-user"></i><span>Siswa</span>
+                    </a>
+                </li>
+            @endcan
+            @can('siswa')
+                <li class="{{ Request::is('peminjaman*') ? 'active' : '' }}">
+                    <a class="nav-link" href="/peminjaman">
+                    <i class="fas fa-shopping-cart"></i><span>Keranjang Peminjaman</span>
                     </a>
                 </li>
             @endcan

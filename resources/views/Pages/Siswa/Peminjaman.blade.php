@@ -71,6 +71,17 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group mb-0">
+                                <label for="keterangan">Keterangan</label>
+                                <input id="keterangan" name="keterangan" type="text"
+                                    class="form-control @error('keterangan') is-invalid @enderror"
+                                    value="{{ old('keterangan') }}" placeholder="Keterangan">
+                                @error('keterangan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="card-footer text-center">
                             <button type="submit" class="btn btn-outline-success">Simpan</button>

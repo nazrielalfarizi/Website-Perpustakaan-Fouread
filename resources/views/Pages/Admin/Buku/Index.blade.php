@@ -2,60 +2,87 @@
 @section('Pages')
     <div class="section-header d-flex justify-content-between">
         <h1>{{ $title }}</h1>
-        <a href="/buku/create" class="btn btn-icon btn-outline-success"><i class="fas fa-plus"></i></a>
+        <div class="d-flex justify-content-end">
+            @if ($peminjamen->count() > 0)
+                <form action="/peminjaman/filterBulan" id="dbForm" class="mr-3" method="get">
+                    <select onchange="autoSubmit()" name="month" id="month" class="form-control">
+                        <option hidden disabled selected>Pilih Bulan...</option>
+                        @foreach ($bulan as $bulan)
+                            <option value="{{ $bulan->month }}">
+                                {{ \Carbon\Carbon::create()->month($bulan->month)->isoFormat('MMMM') }}</option>
+                        @endforeach
+                    </select>
+                </form>
+            @endif
+            <a href="/exportPeminjaman" class="btn btn-outline-success mr-1">Export</a>
+            <a href="/peminjaman/create" class="btn btn-icon btn-outline-success"><i class="fas fa-plus"></i></a>
+        </div>
     </div>
+
     <div class="section-body">
-        @if ($bukus->count() > 0)
-            <div class="row">
-                @foreach ($bukus as $buku)
-                    <div class="col-12 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="mt-0 mb-1 text-center"><a style="color: black;"
-                                                href="/buku/{{ $buku->id }}">{{ $buku->judul }}</a></h5>
-                                        <p>{{ $buku->excerpt }}</p>
-                                    </div>
-                                    @if ($buku->cover)
-                                        <img src="{{ asset('storage/' . $buku->cover) }}" alt="{{ $buku->judul }}"
-                                            class="m-3 img-fluid rounded" height="75px" width="122px">
-                                    @else
-                                        <img src="{{ asset('assets/default.png') }}" alt="{{ $buku->judul }}"
-                                            class="m-3 img-fluid rounded" height="75px" width="122px">
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-flex justify-content-between">
-                                    <a class="btn btn-outline-primary" href="/buku/{{ $buku->id }}">Baca
-                                        Selengkapnya</a>
-                                    <div>
-                                        <a href="/buku/{{ $buku->id }}/edit"
-                                            class="btn btn-icon btn-outline-warning mr-1"><i class="far fa-edit"></i></a>
-                                        <form action="/buku/{{ $buku->id }}" method="POST" class="d-inline">
-                                            @method('delete')
-                                            @csrf
-                                            <button
-                                                onclick="return confirm('Anda Yakin akan Menghapus Data Buku {{ $buku->judul }}?')"
-                                                class="btn btn-icon btn-outline-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="myTable-1">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            No.
+                                        </th>
+                                        <th class="text-center">Judul Buku</th>
+                                        <th class="text-center">Nama Peminjam</th>
+                                        <th class="text-center">Jumlah Peminjaman</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Harus Dikembalikan</th>
+                                        <th class="text-center">Keterangan</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($peminjamen as $peminjaman)
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td>{{ $peminjaman->buku->judul }}</td>
+                                            <td class="text-center">{{ $peminjaman->user->name }}</td>
+                                            <td class="text-center">{{ $peminjaman->arsip }}</td>
+                                            <td class="text-center"><span
+                                                    class="badge rounded-pill text-white {{ $peminjaman->status == 'Dipinjam' ? 'bg-warning' : ($peminjaman->status == 'Dikembalikan' ? 'bg-success' : ($peminjaman->status == 'Penyerahan' ? 'bg-secondary' : 'bg-danger')) }}">{{ $peminjaman->status }}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $peminjaman->tanggal == null ? '' : \Carbon\Carbon::parse($peminjaman->tanggal)->isoFormat('dddd, D MMMM Y') }}
+                                            </td>
+                                            <td>{{ $peminjaman->keterangan }}</td>
+                                            <td class="text-right d-flex justify-content-end">
+                                                <a href="/pengembalian/create/{{ $peminjaman->id }}"
+                                                    class="btn btn-icon btn-outline-primary mr-1"><i
+                                                        class="fas fa-exchange-alt"></i></a>
+                                                <form action="/peminjaman/{{ $peminjaman->id }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button
+                                                        onclick="return confirm('Anda Yakin akan Menghapus Data peminjaman {{ $peminjaman->buku->judul }} oleh {{ $peminjaman->user->name }}?')"
+                                                        class="btn btn-icon btn-outline-danger"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                @endforeach
+                </div>
             </div>
-        @else
-            <div class="alert alert-danger text-center">
-                <h4 class="alert-heading">Tidak Ada Data</h4>
-                <p>Tidak ada data buku yang tersedia.</p>
-            </div>
-        @endif
+        </div>
     </div>
-    <div class="d-flex justify-content-center align-items-end">
-        {{ $bukus->links() }}
-    </div>
+    <script>
+        function autoSubmit() {
+            var formObject = document.forms['dbForm'];
+            formObject.submit();
+        }
+    </script>
 @endsection

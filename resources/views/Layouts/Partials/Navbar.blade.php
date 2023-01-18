@@ -29,7 +29,7 @@
                         <i class="far fa-user"></i> Profil
                     </a>
                     @cannot('admin')
-                        <a class="dropdown-item has-icon" href="/myPeminjaman/{{ auth()->user()->id }}">
+                        <a class="dropdown-item has-icon" href="/peminjaman">
                             <i class="fas fa-shopping-cart"></i> Keranjang Peminjaman
                         </a>
                     @endcannot

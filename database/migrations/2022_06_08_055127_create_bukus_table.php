@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('halaman')->nullable();
             $table->text('cover')->nullable();
             $table->year('tahunRilis')->nullable();
-            $table->text('keterangan')->nullable();
+            $table->text('keterangan')->default('Tersedia');
             $table->timestamps();
         });
     }
