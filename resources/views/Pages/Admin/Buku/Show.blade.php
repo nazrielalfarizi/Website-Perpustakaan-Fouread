@@ -16,12 +16,7 @@
             </tr>
             <tr>
                 <td class="text-center">Stok</td>
-                <td>@if($buku->stok > 0)
-                <td class="stok"><span class="badge bg-success text-secondary">Tidak Tersedia</span></td>
-                @else
-                <td class="stok"><span class="badge bg-success text-secondary">{{ $buku->stok }}</span></td>
-                @endif
-                </td>
+                <td>{{ $buku->stok }}</td>
             </tr>
             <tr>
                 <td class="text-center">Sinopsis</td>
@@ -55,7 +50,7 @@
                 <td class="keterangan"><span class="badge bg-success text-secondary">{{ $buku->keterangan }}</span></td>
                 @endif
                 @if($buku->keterangan == 'Tidak Tersedia' && $buku->stok == 0)
-                <td class="keterangan"><span class="badge bg-warning text-secondary">{{ $buku->keterangan }}</span></td>
+                <td class="keterangan"><span class="badge bg-danger text-secondary">{{ $buku->keterangan }}</span></td>
                 @endif
                 <!-- <td><span class="badge rounded-pill text-white {{ $buku->keterangan == 'Tidak Tersedia' ? 'bg-warning' : ($buku->keterangan == 'Tersedia' ? 'bg-success' : ($peminjaman->status == 'Penyerahan' ? 'bg-secondary' : 'bg-danger')) }}">{{ $buku->keterangan }}</span></td> -->
             </tr>

@@ -148,4 +148,14 @@ class PeminjamanController extends Controller
 
         return back();
     }
+
+    public function tidaktersedia(Peminjaman $peminjaman)
+    {
+        Peminjaman::destroy($peminjaman->id);
+
+        Alert::toast('Data Peminjaman Berhasil Dihapus!', 'success');
+
+        return back();
+    }
+
 }
