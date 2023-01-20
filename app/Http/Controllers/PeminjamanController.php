@@ -149,13 +149,15 @@ class PeminjamanController extends Controller
         return back();
     }
 
-    public function tidaktersedia(Peminjaman $peminjaman)
-    {
-        Peminjaman::destroy($peminjaman->id);
+    // public function tidaktersedia(Peminjaman $peminjaman)
+    // {
+    //     $stok = $request->stok
 
-        Alert::toast('Data Peminjaman Berhasil Dihapus!', 'success');
-
-        return back();
-    }
+    //     if($request['stok'] == '0') {
+    //         $validatedData['stok'] = Carbon::now()->addDays($request['tanggal']);
+    //     } elseif ($request['satuanTanggal'] == 'minggu') {
+    //         $validatedData['tanggal'] = Carbon::now()->addWeeks($request['tanggal']);
+    //     }
+    // }
 
 }
