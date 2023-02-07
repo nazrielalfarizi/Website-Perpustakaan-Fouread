@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\PeminjamanController;
+use App\Models\Kategori;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::get('/', function () {
         'title' => 'Dashboard',
         'bukus' => Buku::query()->limit(10)->latest()->get(),
         'ebooks' => Ebook::latest()->get(),
+        // 'kategori' => Kategori::all(),
     ]);
 });
 Route::get('/statistik', function () {
@@ -128,7 +130,7 @@ Route::group(['middleware' => 'wali-kelas'], function () {
 
 Route::group(['middleware' => 'admin'], function () {
     Route::resource('/kelas', App\Http\Controllers\KelasController::class)->except('show');
-    Route::resource('/kategori', App\Http\Controllers\KategoriController::class)->except('show');
+    Route::resource('/kategori', App\Http\Controllers\KategoriController::class);
 
     // Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update']);
     // Route::get('/exportPeminjaman', [App\Http\Controllers\PeminjamanController::class, 'export']);
