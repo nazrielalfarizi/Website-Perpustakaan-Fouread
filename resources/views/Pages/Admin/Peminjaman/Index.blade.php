@@ -47,7 +47,7 @@
                                                 {{ $loop->iteration }}
                                             </td>
                                             <td>{{ $peminjaman->buku->judul }}</td>
-                                            <td class="text-center">{{ $peminjaman->user->name }}</td>
+                                            <td class="text-center">{{ Auth::user()->name }}</td>
                                             <td class="text-center">{{ $peminjaman->arsip }}</td>
                                             <td class="text-center"><span
                                                     class="badge rounded-pill text-white {{ $peminjaman->status == 'Dipinjam' ? 'bg-warning' : ($peminjaman->status == 'Dikembalikan' ? 'bg-success' : ($peminjaman->status == 'Penyerahan' ? 'bg-secondary' : 'bg-danger')) }}">{{ $peminjaman->status }}</span>

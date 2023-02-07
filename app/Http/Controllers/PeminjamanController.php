@@ -10,6 +10,7 @@ use App\Models\Pengembalian;
 use Illuminate\Http\Request;
 use App\Exports\PeminjamanExport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -71,12 +72,13 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
+        // dd(Auth::user()->id);
         Peminjaman::query()->where('tanggal', NULL)->update([
             'status' => 'Dikembalikan',
         ]);
         return view('Pages.Admin.Peminjaman.Index', [
             'title' => 'Data Peminjaman',
-            'peminjamen' => Peminjaman::all()->sortBy('tanggal', SORT_NATURAL, false),
+            'peminjamen' => Peminjaman::where('user_id', Auth::user()->id)->get()->sortBy('tanggal', SORT_NATURAL, false),
             'bulan' => Peminjaman::select(DB::raw("(DATE_FORMAT(created_at, '%m')) as month"))
                 ->orderBy('created_at')
                 ->groupBy(DB::raw("DATE_FORMAT(created_at, '%m')"))
