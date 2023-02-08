@@ -59,7 +59,8 @@ Route::group(['middleware' => 'auth' ], function () {
     Route::get('/search', [App\Http\Controllers\SearchController::class, 'index']);
 
     Route::resource('/profil', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
-    Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update']);
+    Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update', 'create']);
+    Route::get('/peminjaman/create/{id}', [App\Http\Controllers\PeminjamanController::class, 'create']);
     Route::get('/exportPeminjaman', [App\Http\Controllers\PeminjamanController::class, 'export']);
     Route::get('/peminjaman/filterBulan', [App\Http\Controllers\PeminjamanController::class, 'filterBulan']);
     // Route::resource('/peminjaman', App\Http\Controllers\PinjamController::class)->except(['show', 'edit', 'update']);

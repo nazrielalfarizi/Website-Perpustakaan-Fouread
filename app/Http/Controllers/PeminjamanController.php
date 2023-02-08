@@ -72,13 +72,18 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        // dd(Auth::user()->id);
         Peminjaman::query()->where('tanggal', NULL)->update([
             'status' => 'Dikembalikan',
         ]);
+        if (Auth::user()->role != 'admin') {
+            $peminjamen = Peminjaman::where('user_id', Auth::user()->id)->get()->sortBy('tanggal', SORT_NATURAL, false);
+        } else {
+            $peminjamen = Peminjaman::all();
+        }
         return view('Pages.Admin.Peminjaman.Index', [
             'title' => 'Data Peminjaman',
-            'peminjamen' => Peminjaman::where('user_id', Auth::user()->id)->get()->sortBy('tanggal', SORT_NATURAL, false),
+            'peminjamen' => $peminjamen,
+            // 'user' => User::class,
             'bulan' => Peminjaman::select(DB::raw("(DATE_FORMAT(created_at, '%m')) as month"))
                 ->orderBy('created_at')
                 ->groupBy(DB::raw("DATE_FORMAT(created_at, '%m')"))
@@ -91,12 +96,12 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         return view('Pages.Admin.Peminjaman.Create', [
             'title' => 'Tambah Data Peminjaman',
             'users' => User::query()->where('role', '=', 'siswa')->orWhere('role', '=', 'guru')->get(),
-            'bukus' => Buku::all(),
+            'buku' => Buku::where('id', $id)->first(),
         ]);
     }
 
@@ -109,7 +114,8 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required|numeric',
+            'user_id' => 'required',
+            'buku_id' => 'required',
             'jumlah' => 'required|numeric',
             'keterangan' => 'max:1000',
         ]);
@@ -125,12 +131,7 @@ class PeminjamanController extends Controller
         $validatedData['arsip'] = $validatedData['jumlah'];
         $validatedData['status'] = 'Dipinjam';
 
-        $buku_id = $request['buku_id'];
-
-        foreach ($buku_id as $buku) {
-            $validatedData['buku_id'] = $buku;
-            Peminjaman::query()->create($validatedData);
-        }
+        Peminjaman::create($validatedData);
 
         Alert::toast('Data Peminjaman Berhasil Ditambahkan!', 'success');
         return redirect('/peminjaman');

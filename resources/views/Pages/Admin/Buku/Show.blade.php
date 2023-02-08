@@ -92,7 +92,7 @@
             </tr>
             @can('siswa')
             <tr>
-                <td class="text-center"><a href="/peminjaman/create" class="btn btn-icon btn-outline-success">Pinjam Buku</a></td>
+                <td class="text-center"><a href="{{url('peminjaman/create/' . $buku->id)}}" class="btn btn-icon btn-outline-success">Pinjam Buku</a></td>
             </tr>
             @endcan
         </tbody>

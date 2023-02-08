@@ -15,17 +15,9 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="user_id">Peminjam</label>
-                                <select name="user_id" id="user_id" class="form-control select2">
-                                    <option disabled selected>Pilih Peminjam...</option>
-                                    @foreach ($users as $user)
-                                        @if (old('user_id') == $user->id)
-                                            <option value="{{ $user->id }}" selected>{{ $user->name }}</option>
-                                        @else
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                            <label for="user_id">Peminjaman</label>
+                                <input id="user_id" name="user_id" type="text" class="form-control @error('user_id') is-invalid @enderror" value="{{ Auth::user()->name }}" disabled>
+                                <input id="user_id" name="user_id" type="hidden" class="form-control @error('user_id') is-invalid @enderror" value="{{ Auth::user()->id }}">
                                 @error('user_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -33,17 +25,10 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="buku_id[]">Judul Buku</label>
-                                <select name="buku_id[]" id="buku_id[]" class="form-control select2" multiple="" required>
-                                    @foreach ($bukus as $buku)
-                                        @if (old('buku_id[]') == $buku->id)
-                                            <option value="{{ $buku->id }}" selected>{{ $buku->judul }}</option>
-                                        @else
-                                            <option value="{{ $buku->id }}">{{ $buku->judul }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                @error('buku_id[]')
+                                <label for="buku-id">Judul Buku</label>
+                                <input id="buku-id" name="buku_id" type="text" class="form-control @error('buku_id') is-invalid @enderror" value="{{ $buku->judul }}" disabled>
+                        <input id="buku-id" name="buku_id" type="hidden" class="form-control @error('buku_id') is-invalid @enderror" value="{{ $buku->id }}">
+                                @error('buku-id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
