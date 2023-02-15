@@ -4,8 +4,7 @@
         <h1>{{ $title }}</h1>
     </div>
     @can('siswa')
-    <section class="mt-5 container" id="kategori"
-    ><h4 class="text-secondary text-center text-thin mt-5 mb-4">Pilih subjek yang menarik bagi Anda</h4> 
+    <section class="mt-5 container" id="kategori"><h4 class="text-secondary text-center text-thin mt-5 mb-4">Pilih subjek yang menarik bagi Anda</h4> 
     <ul class="topic d-flex flex-wrap justify-content-center px-0"><li class="d-flex justify-content-center align-items-center m-2">
         <a id="kategori-btn" data-id="" class="d-flex flex-column"><img src="{{ asset('assets/8-books.png') }}" width="80" class="mb-3 mx-auto">Kesusastraan</a>
             </li><li class="d-flex justify-content-center align-items-center m-2">
@@ -17,7 +16,10 @@
     Kesenian, Hiburan, dan Olahraga            </a></li> <li class="d-flex justify-content-center align-items-center m-2">
         <a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal" class="d-flex flex-column"><img src="{{ asset('assets/grid_icon.png') }}" width="80" class="mb-3 mx-auto">
         lihat lainnya..            </a></li></ul></section>
-    @endcan
+        <button type="button" class="btn btn-primary" id="modal-btn" data-toggle="modal" data-target="#exampleModalCenter">
+            Launch demo modal
+          </button>
+    @endcan 
 </br>
     @can('admin')
     <div class="section-body">
@@ -151,8 +153,80 @@
 
     
     </script>
+    @can('admin')
     <script>
-        const btns = document.querySelectorAll('#kategori-btn');
+        var options = {
+          series: [{
+          name: 'Net Profit',
+          data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+        }, {
+          name: 'Revenue',
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        }, {
+          name: 'Free Cash Flow',
+          data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        },
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    @endcan
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+  <!-- Vertically centered modal -->
+<div class="modal-dialog modal-dialog-centered">
+    ...
+  </div>
+  
+  <!-- Vertically centered scrollable modal -->
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    ...
+  </div>
+@endsection
+
+{{-- 
+const btns = document.querySelectorAll('#kategori-btn');
         btns.forEach(btn => {
             $(btn).on('click', function(){
             $.ajax([
@@ -170,8 +244,4 @@
                 }
             ])
         })
-        });
-        
-    </script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-@endsection
+        }); --}}

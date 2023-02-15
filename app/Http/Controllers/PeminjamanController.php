@@ -127,14 +127,19 @@ class PeminjamanController extends Controller
         } elseif ($request['satuanTanggal'] == 'bulan') {
             $validatedData['tanggal'] = Carbon::now()->addMonths($request['tanggal']);
         }
+        
 
         $validatedData['arsip'] = $validatedData['jumlah'];
         $validatedData['status'] = 'Dipinjam';
 
-        Peminjaman::create($validatedData);
-
-        Alert::toast('Data Peminjaman Berhasil Ditambahkan!', 'success');
+        if ($validatedData['jumlah'] <= Buku::find($validatedData['buku_id'])->stok) {
+            Peminjaman::create($validatedData);
+            Alert::toast('Buku Berhasil Dipinjam!', 'success');
+            return redirect('/peminjaman');
+        }
+        Alert::toast('Buku Gagal Dipinjam!', 'failed');
         return redirect('/peminjaman');
+
     }
 
     /**
