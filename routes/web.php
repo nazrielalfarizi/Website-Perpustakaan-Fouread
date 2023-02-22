@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\PeminjamanController;
+use App\Models\Kategori;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::get('/', function () {
         'title' => 'Dashboard',
         'bukus' => Buku::query()->limit(10)->latest()->get(),
         'ebooks' => Ebook::latest()->get(),
+        // 'kategori' => Kategori::all(),
     ]);
 });
 Route::get('/statistik', function () {
@@ -57,7 +59,8 @@ Route::group(['middleware' => 'auth' ], function () {
     Route::get('/search', [App\Http\Controllers\SearchController::class, 'index']);
 
     Route::resource('/profil', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
-    Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update']);
+    Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update', 'create']);
+    Route::get('/peminjaman/create/{id}', [App\Http\Controllers\PeminjamanController::class, 'create']);
     Route::get('/exportPeminjaman', [App\Http\Controllers\PeminjamanController::class, 'export']);
     Route::get('/peminjaman/filterBulan', [App\Http\Controllers\PeminjamanController::class, 'filterBulan']);
     // Route::resource('/peminjaman', App\Http\Controllers\PinjamController::class)->except(['show', 'edit', 'update']);
@@ -128,7 +131,7 @@ Route::group(['middleware' => 'wali-kelas'], function () {
 
 Route::group(['middleware' => 'admin'], function () {
     Route::resource('/kelas', App\Http\Controllers\KelasController::class)->except('show');
-    Route::resource('/kategori', App\Http\Controllers\KategoriController::class)->except('show');
+    Route::resource('/kategori', App\Http\Controllers\KategoriController::class);
 
     // Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update']);
     // Route::get('/exportPeminjaman', [App\Http\Controllers\PeminjamanController::class, 'export']);

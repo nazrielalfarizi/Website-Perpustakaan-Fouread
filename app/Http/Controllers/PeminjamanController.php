@@ -10,6 +10,7 @@ use App\Models\Pengembalian;
 use Illuminate\Http\Request;
 use App\Exports\PeminjamanExport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -74,9 +75,15 @@ class PeminjamanController extends Controller
         Peminjaman::query()->where('tanggal', NULL)->update([
             'status' => 'Dikembalikan',
         ]);
+        if (Auth::user()->role != 'admin') {
+            $peminjamen = Peminjaman::where('user_id', Auth::user()->id)->get()->sortBy('tanggal', SORT_NATURAL, false);
+        } else {
+            $peminjamen = Peminjaman::all();
+        }
         return view('Pages.Admin.Peminjaman.Index', [
             'title' => 'Data Peminjaman',
-            'peminjamen' => Peminjaman::all()->sortBy('tanggal', SORT_NATURAL, false),
+            'peminjamen' => $peminjamen,
+            // 'user' => User::class,
             'bulan' => Peminjaman::select(DB::raw("(DATE_FORMAT(created_at, '%m')) as month"))
                 ->orderBy('created_at')
                 ->groupBy(DB::raw("DATE_FORMAT(created_at, '%m')"))
@@ -89,12 +96,12 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         return view('Pages.Admin.Peminjaman.Create', [
             'title' => 'Tambah Data Peminjaman',
             'users' => User::query()->where('role', '=', 'siswa')->orWhere('role', '=', 'guru')->get(),
-            'bukus' => Buku::all(),
+            'buku' => Buku::where('id', $id)->first(),
         ]);
     }
 
@@ -107,7 +114,8 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required|numeric',
+            'user_id' => 'required',
+            'buku_id' => 'required',
             'jumlah' => 'required|numeric',
             'keterangan' => 'max:1000',
         ]);
@@ -119,19 +127,19 @@ class PeminjamanController extends Controller
         } elseif ($request['satuanTanggal'] == 'bulan') {
             $validatedData['tanggal'] = Carbon::now()->addMonths($request['tanggal']);
         }
+        
 
         $validatedData['arsip'] = $validatedData['jumlah'];
         $validatedData['status'] = 'Dipinjam';
 
-        $buku_id = $request['buku_id'];
-
-        foreach ($buku_id as $buku) {
-            $validatedData['buku_id'] = $buku;
-            Peminjaman::query()->create($validatedData);
+        if ($validatedData['jumlah'] <= Buku::find($validatedData['buku_id'])->stok) {
+            Peminjaman::create($validatedData);
+            Alert::toast('Buku Berhasil Dipinjam!', 'success');
+            return redirect('/peminjaman');
         }
-
-        Alert::toast('Data Peminjaman Berhasil Ditambahkan!', 'success');
+        Alert::toast('Buku Gagal Dipinjam!', 'failed');
         return redirect('/peminjaman');
+
     }
 
     /**
@@ -149,13 +157,15 @@ class PeminjamanController extends Controller
         return back();
     }
 
-    public function tidaktersedia(Peminjaman $peminjaman)
-    {
-        Peminjaman::destroy($peminjaman->id);
+    // public function tidaktersedia(Peminjaman $peminjaman)
+    // {
+    //     $stok = $request->stok
 
-        Alert::toast('Data Peminjaman Berhasil Dihapus!', 'success');
-
-        return back();
-    }
+    //     if($request['stok'] == '0') {
+    //         $validatedData['stok'] = Carbon::now()->addDays($request['tanggal']);
+    //     } elseif ($request['satuanTanggal'] == 'minggu') {
+    //         $validatedData['tanggal'] = Carbon::now()->addWeeks($request['tanggal']);
+    //     }
+    // }
 
 }

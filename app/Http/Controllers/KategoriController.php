@@ -53,6 +53,15 @@ class KategoriController extends Controller
         return redirect('/kategori');
     }
 
+    public function show(Kategori $kategori) 
+    {
+        dd($kategori);
+        return response()->json([
+            'message' => 'Buku by Kategori!',
+            'datas' =>  $kategori
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -105,5 +114,20 @@ class KategoriController extends Controller
         Alert::toast('Data Kategori Berhasil Dihapus!', 'success');
 
         return back();
+    }
+
+    public function filterKategori(Kategori $kategori)
+    {
+        if (request('search')) {
+            $bukus = Buku::query()->where('judul', 'like', '%' . request('search') . '%')->orWhere('sinopsis', 'like', '%' . request('search') . '%')->get();
+            $ebooks = Ebook::query()->where('judul', 'like', '%' . request('search') . '%')->orWhere('sinopsis', 'like', '%' . request('search') . '%')->get();
+            return view('Pages.Auth.Search.Index', [
+                'title' => 'Hasil Pencarian',
+                'bukus' => $bukus,
+                'ebooks' => $ebooks,
+            ]);
+        } else {
+            return redirect('/');
+        }
     }
 }

@@ -46,12 +46,13 @@
             </tr>
             <tr>
                 <td class="text-center">Keterangan</td>
-                @if($buku->keterangan == 'Tersedia')
-                <td class="keterangan"><span class="badge bg-success text-secondary">{{ $buku->keterangan }}</span></td>
-                @endif
-                @if($buku->keterangan == 'Tidak Tersedia' && $buku->stok == 0)
-                <td class="keterangan"><span class="badge bg-danger text-secondary">{{ $buku->keterangan }}</span></td>
-                @endif
+                <td>
+                    @if($buku->stok > 0)
+                    <label class="text-center badge rounded-pill text-white bg-success">Tersedia</label>
+                    @else
+                    <label class="text-center badge rounded-pill text-white bg-warning">Tidak Tersedia</label>
+                    @endif
+                </td>
                 <!-- <td><span class="badge rounded-pill text-white {{ $buku->keterangan == 'Tidak Tersedia' ? 'bg-warning' : ($buku->keterangan == 'Tersedia' ? 'bg-success' : ($peminjaman->status == 'Penyerahan' ? 'bg-secondary' : 'bg-danger')) }}">{{ $buku->keterangan }}</span></td> -->
             </tr>
             <tr>
@@ -91,7 +92,7 @@
             </tr>
             @can('siswa')
             <tr>
-                <td class="text-center"><a href="/peminjaman/create" class="btn btn-icon btn-outline-success">Pinjam Buku</a></td>
+                <td class="text-center"><a href="{{url('peminjaman/create/' . $buku->id)}}" class="btn btn-icon btn-outline-success">Pinjam Buku</a></td>
             </tr>
             @endcan
         </tbody>

@@ -37,7 +37,7 @@
                                         <th class="text-center">Jumlah Peminjaman</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Harus Dikembalikan</th>
-                                        <th></th>
+                                        <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,16 +55,17 @@
                                             <td class="text-center">
                                                 {{ $peminjaman->tanggal == null ? '' : \Carbon\Carbon::parse($peminjaman->tanggal)->isoFormat('dddd, D MMMM Y') }}
                                             </td>
-                                            <td class="text-right d-flex justify-content-end">
+                                            <td class="text-right d-flex justify-content-center">
+                                                @can('admin')
                                                 <a href="/pengembalian/create/{{ $peminjaman->id }}"
                                                     class="btn btn-icon btn-outline-primary mr-1"><i
                                                         class="fas fa-exchange-alt"></i></a>
+                                                @endcan
                                                 <form action="/peminjaman/{{ $peminjaman->id }}" method="POST">
                                                     @method('delete')
                                                     @csrf
                                                     <button
-                                                        onclick="return confirm('Anda Yakin akan Menghapus Data peminjaman {{ $peminjaman->buku }} oleh {{ $peminjaman->user->name }}?')"
-                                                        class="btn btn-icon btn-outline-danger"><i
+                                                        class="btn btn-icon btn-outline-danger show_confirm"><i
                                                             class="fas fa-trash"></i></button>
                                                 </form>
                                             </td>
@@ -78,10 +79,37 @@
             </div>
         </div>
     </div>
-    <script>
-        function autoSubmit() {
-            var formObject = document.forms['dbForm'];
-            formObject.submit();
-        }
-    </script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).on('click', '.show_confirm', function(event) {
+          var form =  $(this).closest("form");
+          var name = $(this).data("name");
+          event.preventDefault();
+          Swal.fire({
+            title: 'PERINGATAN!',
+            text: 'Yakin ingin menghapus data peminjaman?',
+            icon: 'warning',
+            showCancelButton:true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yakin',
+            cancelButtonText: 'Batal',
+        })
+          .then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Hapus!',
+                    'Data Berhasil di hapus',
+                    'success'
+                )
+                setTimeout(() => {
+                    form.submit();
+                }, 100);
+            }
+          });
+      });
+  
+</script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

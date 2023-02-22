@@ -12,9 +12,6 @@
                 <a class="nav-link" href="/"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
             @can('admin')
-            <li class="{{ Request::is('statistik', 'search*', 'profil*', 'myPeminjaman*') ? 'active' : '' }}">
-                <a class="nav-link" href="/statistik"><i class="fas fa-fire"></i><span>Statistik</span></a>
-            </li>
                 <li class="menu-header">Manajemen Data</li>
                 <li class="dropdown {{ Request::is('peminjaman*', 'pengembalian*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown">
