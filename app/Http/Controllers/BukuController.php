@@ -76,17 +76,11 @@ class BukuController extends Controller
             'cover' => 'image|file',
             'penerbit' => 'max:255',
             'pengarang' => 'max:255',
-            'keterangan' => 'max:1000',
+            'keterangan' => 'max:50',
         ]);
 
         if ($request->file('cover')) {
             $validatedData['cover'] = $request->file('cover')->store('cover-buku');
-        }
-
-        if($request->jumlah > 0 ){
-            $validatedData['keterangan'] = 'Tersedia';
-        } else {
-            $validatedData['keterangan'] = 'Tidak Tersedia';
         }
         $validatedData['sinopsis'] = $request['sinopsis'];
         $validatedData['halaman'] = $request['halaman'];
@@ -164,7 +158,7 @@ class BukuController extends Controller
             'cover' => 'image|file',
             'penerbit' => 'max:255',
             'pengarang' => 'max:255',
-            'keterangan' => 'max:1000',
+            'keterangan' => 'max:50',
         ])->validate();
 
         if ($request->file('cover')) {

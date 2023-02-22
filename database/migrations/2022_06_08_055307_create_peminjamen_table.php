@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('arsip');
             $table->enum('status', ['Dipinjam', 'Dikembalikan', 'Waktunya Dikembalikan', 'Penyerahan']);
             $table->date('tanggal')->nullable();
-            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
