@@ -16,6 +16,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class PeminjamanController extends Controller
 {
+    public function accept(Request $request)
+    {
+        $peminjaman = Peminjaman::with('buku')->find($request['id']);
+        $peminjaman->update([
+            'status' => 'Dipinjam'
+        ]);
+        return redirect()->route('peminjaman.index')->with('success', 'Berhasil meminjamkan: '. $peminjaman->buku->judul);
+    }
+
     public function filterBulan(Request $request)
     {
         $bulan = $request->month;
@@ -76,13 +85,15 @@ class PeminjamanController extends Controller
             'status' => 'Dikembalikan',
         ]);
         if (Auth::user()->role != 'admin') {
-            $peminjamen = Peminjaman::where('user_id', Auth::user()->id)->get()->sortBy('tanggal', SORT_NATURAL, false);
+            $peminjaman = Peminjaman::where('user_id', Auth::user()->id)
+            -> where('status', 'Dipinjam')->get();
+            $peminjaman->sortBy('tanggal', SORT_NATURAL, false);
         } else {
-            $peminjamen = Peminjaman::all();
+            $peminjaman = Peminjaman::all();
         }
         return view('Pages.Admin.Peminjaman.Index', [
             'title' => 'Data Peminjaman',
-            'peminjamen' => $peminjamen,
+            'peminjamen' => $peminjaman,
             // 'user' => User::class,
             'bulan' => Peminjaman::select(DB::raw("(DATE_FORMAT(created_at, '%m')) as month"))
                 ->orderBy('created_at')
@@ -117,7 +128,6 @@ class PeminjamanController extends Controller
             'user_id' => 'required',
             'buku_id' => 'required',
             'jumlah' => 'required|numeric',
-            'keterangan' => 'max:1000',
         ]);
 
         if ($request['satuanTanggal'] == 'hari') {
@@ -130,7 +140,6 @@ class PeminjamanController extends Controller
         
 
         $validatedData['arsip'] = $validatedData['jumlah'];
-        $validatedData['status'] = 'Dipinjam';
 
         if ($validatedData['jumlah'] <= Buku::find($validatedData['buku_id'])->stok) {
             Peminjaman::create($validatedData);
@@ -157,15 +166,5 @@ class PeminjamanController extends Controller
         return back();
     }
 
-    // public function tidaktersedia(Peminjaman $peminjaman)
-    // {
-    //     $stok = $request->stok
-
-    //     if($request['stok'] == '0') {
-    //         $validatedData['stok'] = Carbon::now()->addDays($request['tanggal']);
-    //     } elseif ($request['satuanTanggal'] == 'minggu') {
-    //         $validatedData['tanggal'] = Carbon::now()->addWeeks($request['tanggal']);
-    //     }
-    // }
 
 }

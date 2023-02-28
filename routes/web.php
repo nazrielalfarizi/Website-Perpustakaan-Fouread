@@ -43,7 +43,11 @@ Route::get('/structure', function () {
     ]);
 });
 
-Route::get('/Statistik', [App\Http\Controllers\StatistikController::class, 'index']);
+
+Route::get('/guestbook', [App\Http\Controllers\GuestBookController::class, 'create'] );
+Route::post('/guestbook', [App\Http\Controllers\GuestBookController::class, 'store'] );
+Route::get('/dataguestbook', [App\Http\Controllers\GuestBookController::class, 'index'] );
+Route::get('/exportGuestBook', [App\Http\Controllers\GuestBookController::class, 'export']);
 
 // Route::get('/minjam', function () {
 //     return view('pages.siswa.peminjaman');
@@ -57,6 +61,8 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::group(['middleware' => 'auth' ], function () {
     Route::get('/search', [App\Http\Controllers\SearchController::class, 'index']);
+
+    Route::post('accept/buku-dipinjam',[PeminjamanController::class, 'accept'])->name('accept');
 
     Route::resource('/profil', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
     Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update', 'create']);

@@ -9,7 +9,17 @@ class GuestBook extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nis', 'nama', 'kelas', 'jurusan', 'aksi'
-    ];
+    protected $guarded = ['id'];
+    protected $table = 'guestbook';
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
 }

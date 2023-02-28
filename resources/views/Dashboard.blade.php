@@ -16,9 +16,6 @@
     Kesenian, Hiburan, dan Olahraga            </a></li> <li class="d-flex justify-content-center align-items-center m-2">
         <a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal" class="d-flex flex-column"><img src="{{ asset('assets/grid_icon.png') }}" width="80" class="mb-3 mx-auto">
         lihat lainnya..            </a></li></ul></section>
-        <button type="button" class="btn btn-primary" id="modal-btn" data-toggle="modal" data-target="#exampleModalCenter">
-            Launch demo modal
-          </button>
     @endcan 
 </br>
     @can('admin')
