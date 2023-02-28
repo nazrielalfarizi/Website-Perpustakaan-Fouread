@@ -1,4 +1,4 @@
-p@extends('Layouts.AppLayout')
+@extends('Layouts.AppLayout')
 @section('Pages')
     <div class="section-header">
         <div class="section-header-back">
