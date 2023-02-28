@@ -56,10 +56,10 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown {{ Request::is('guru*', 'siswa*') ? 'active' : '' }}">
+                <li class="dropdown {{ Request::is('dataguestbook*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Guest Book</span></a>
                     <ul class="dropdown-menu">
-                        <li class="{{ Request::is('siswa*') ? 'active' : '' }}">
+                        <li class="{{ Request::is('dataguestbook*') ? 'active' : '' }}">
                             <a class="nav-link" href="/dataguestbook">Data GuestBook</a>
                         </li>
                     </ul>

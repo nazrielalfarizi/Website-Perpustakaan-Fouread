@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         User::factory()->create([
             'name' => 'Admin',
             'username' => 'admin',
@@ -324,50 +323,50 @@ class DatabaseSeeder extends Seeder
         ]);
         // KATEGORI END
 
-        // KELAS START
-        Kelas::create([
-            'nama' => '1A'
-        ]);
-        Kelas::create([
-            'nama' => '1B'
-        ]);
-        Kelas::create([
-            'nama' => '2A'
-        ]);
-        Kelas::create([
-            'nama' => '2B'
-        ]);
-        Kelas::create([
-            'nama' => '3A'
-        ]);
-        Kelas::create([
-            'nama' => '3B'
-        ]);
-        Kelas::create([
-            'nama' => '3C'
-        ]);
-        Kelas::create([
-            'nama' => '4A'
-        ]);
-        Kelas::create([
-            'nama' => '4B'
-        ]);
-        Kelas::create([
-            'nama' => '5A'
-        ]);
-        Kelas::create([
-            'nama' => '5B'
-        ]);
-        Kelas::create([
-            'nama' => '5C'
-        ]);
-        Kelas::create([
-            'nama' => '6A'
-        ]);
-        Kelas::create([
-            'nama' => '6B'
-        ]);
-        // KELAS END
+        // // KELAS START
+        // Kelas::create([
+        //     'nama' => '1A'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '1B'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '2A'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '2B'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '3A'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '3B'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '3C'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '4A'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '4B'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '5A'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '5B'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '5C'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '6A'
+        // ]);
+        // Kelas::create([
+        //     'nama' => '6B'
+        // ]);
+        // // KELAS END
 
         // KATEGORI BUKU DAN E-BOOK START
         DB::insert('INSERT INTO kategori_buku (buku_id, kategori_id) VALUES (?, ?)', [1, 1]);
@@ -396,5 +395,191 @@ class DatabaseSeeder extends Seeder
         DB::insert('INSERT INTO kategori_ebook (ebook_id, kategori_id) VALUES (?, ?)', [6, 1]);
         DB::insert('INSERT INTO kategori_ebook (ebook_id, kategori_id) VALUES (?, ?)', [6, 6]);
         // KATEGORI BUKU DAN E-BOOK END
+
+
+        //KELAS
+        Kelas::create([
+            'nama' => 'X-DKV1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-DKV2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-PPLG1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-PPLG2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-PPLG3',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TELK1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TELK2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TELK3',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TELK4',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TKTL1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TKTL2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TKTL3',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TKTL4',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TJKT1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'X-TJKT2',
+
+        ]);
+
+        // XI
+        Kelas::create([
+            'nama' => 'XI-DKV1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-DKV2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-RPL1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-RPL2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TAV1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TAV2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TAV3',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TAV4',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TOI1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TOI2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TKJ1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TKJ2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TITL1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XI-TITL2',
+
+        ]);
+
+        // XII
+        Kelas::create([
+            'nama' => 'XII-TAV1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TAV2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TAV3',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TITL1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TITL2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TOI1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TOI2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TKJ1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-TKJ2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-RPL1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-RPL2',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-MM1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XII-MM2',
+
+        ]);
+
+        // XIII
+        Kelas::create([
+            'nama' => 'XIII-TOI1',
+
+        ]);
+        Kelas::create([
+            'nama' => 'XIII-TOI2',
+
+        ]);
+        //END KELAS
     }
 }
