@@ -7,6 +7,13 @@
         <h1>{{ $title }}</h1>
     </div>
 
+    @if ($peminjaman->status === 'Pending')
+        <form action="{{ route('accept') }}" method="post">
+            @csrf
+            <input type="text" name="id" value="{{ $peminjaman->id }}" hidden>
+            <button class="btn btn-outline-success">Accept Peminjaman</button>
+        </form>
+    @else
     <div class="section-body">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-6">
@@ -47,4 +54,6 @@
             </div>
         </div>
     </div>
-@endsection
+    @endif
+
+    @endsection

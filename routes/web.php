@@ -62,6 +62,8 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth' ], function () {
     Route::get('/search', [App\Http\Controllers\SearchController::class, 'index']);
 
+    Route::post('accept/buku-dipinjam',[PeminjamanController::class, 'accept'])->name('accept');
+
     Route::resource('/profil', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
     Route::resource('/peminjaman', App\Http\Controllers\PeminjamanController::class)->except(['show', 'edit', 'update', 'create']);
     Route::get('/peminjaman/create/{id}', [App\Http\Controllers\PeminjamanController::class, 'create']);

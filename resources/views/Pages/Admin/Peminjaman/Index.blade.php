@@ -57,9 +57,12 @@
                                             </td>
                                             <td class="text-right d-flex justify-content-center">
                                                 @can('admin')
-                                                <a href="/pengembalian/create/{{ $peminjaman->id }}"
+                                                <a href="/pengembalian/create/{{ $peminjaman->id }}" class="btn btn-icon btn-outline-success mr-1">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </a>
+                                                {{-- <a href="/pengembalian/create/{{ $peminjaman->id }}"
                                                     class="btn btn-icon btn-outline-primary mr-1"><i
-                                                        class="fas fa-exchange-alt"></i></a>
+                                                        class="fas fa-exchange-alt"></i></a> --}}
                                                 @endcan
                                                 <form action="/peminjaman/{{ $peminjaman->id }}" method="POST">
                                                     @method('delete')
