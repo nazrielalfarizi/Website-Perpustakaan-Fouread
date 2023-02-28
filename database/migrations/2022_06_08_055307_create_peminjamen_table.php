@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('jumlah');
             $table->integer('arsip');
-            $table->enum('status', ['Dipinjam', 'Dikembalikan', 'Waktunya Dikembalikan', 'Penyerahan']);
+            $table->enum('status', ['Dipinjam', 'Pending', 'Dikembalikan'])->default('Pending');
             $table->date('tanggal')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();

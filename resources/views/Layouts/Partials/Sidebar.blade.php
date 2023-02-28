@@ -59,11 +59,8 @@
                 <li class="dropdown {{ Request::is('guru*', 'siswa*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Guest Book</span></a>
                     <ul class="dropdown-menu">
-                        <li class="{{ Request::is('guru*') ? 'active' : '' }}">
-                            <a class="nav-link" href="/guestbook">Guru</a>
-                        </li>
                         <li class="{{ Request::is('siswa*') ? 'active' : '' }}">
-                            <a class="nav-link" href="/guestbook">Siswa</a>
+                            <a class="nav-link" href="/dataguestbook">Data GuestBook</a>
                         </li>
                     </ul>
                 </li>
@@ -80,11 +77,6 @@
                 <li class="{{ Request::is('peminjaman*') ? 'active' : '' }}">
                     <a class="nav-link" href="/peminjaman">
                     <i class="fas fa-shopping-cart"></i><span>Keranjang Peminjaman</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('peminjaman*') ? 'active' : '' }}">
-                    <a class="nav-link" href="/guestbook">
-                    <i class="fas fa-book"></i><span>Guest Book</span>
                     </a>
                 </li>
             @endcan

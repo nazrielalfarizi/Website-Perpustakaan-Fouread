@@ -43,10 +43,11 @@ Route::get('/structure', function () {
     ]);
 });
 
-Route::get('/Statistik', [App\Http\Controllers\StatistikController::class, 'index']);
 
 Route::get('/guestbook', [App\Http\Controllers\GuestBookController::class, 'create'] );
 Route::post('/guestbook', [App\Http\Controllers\GuestBookController::class, 'store'] );
+Route::get('/dataguestbook', [App\Http\Controllers\GuestBookController::class, 'index'] );
+Route::get('/exportGuestBook', [App\Http\Controllers\GuestBookController::class, 'export']);
 
 // Route::get('/minjam', function () {
 //     return view('pages.siswa.peminjaman');

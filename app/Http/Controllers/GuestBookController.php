@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Kelas;
 use App\Models\GuestBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Exports\GuestBookExport;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuestBookController extends Controller
 {
@@ -18,7 +21,16 @@ class GuestBookController extends Controller
      */
     public function index()
     {
-        
+        $guestbook = GuestBook::with('user')->get();
+        return view('Pages.Admin.GuestBook.Show', [
+            'title' => 'Data Tamu Perpustakaan',
+            'guestbook' => $guestbook,
+        ]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new GuestBookExport, 'data-tamu.xlsx');
     }
 
     /**
@@ -43,14 +55,16 @@ class GuestBookController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'keterangan' => 'max:1000',
+            'user_id' => 'required',
+            'kelas_id' => 'required',
+            'tujuan' => 'max:1000',
         ]);
 
         $validatedData['tanggal'] = Carbon::now();
 
         GuestBook::create($validatedData);
 
-        Alert::toast('Data Tamu Berhasil Ditambahkan!', 'success');
+        Alert::success('Data Tamu berhasil ditambahkan', 'Selamat Datang di Perpustakaan! 😀');
 
         return redirect('/');
     }
@@ -63,7 +77,7 @@ class GuestBookController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

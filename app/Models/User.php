@@ -38,6 +38,11 @@ class User extends Authenticatable
         return $this->belongsTo(Kelas::class);
     }
 
+    public function guestbook()
+    {
+        return $this->hasMany(GuestBook::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

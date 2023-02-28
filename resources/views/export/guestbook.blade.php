@@ -1,19 +1,3 @@
-@extends('Layouts.AppLayout')
-@section('Pages')
-<div class="section-header d-flex justify-content-between">
-    <h1>{{ $title }}</h1>
-    <div class="d-flex justify-content-end">
-        @can('admin')            
-        <a href="/exportGuestBook" class="btn btn-outline-success mr-1">Export</a>
-        @endcan
-    </div>
-</div>
-<div class="section-body">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
                         <table class="table table-striped" id="myTable-1">
                             <thead>
                                 <tr>
@@ -40,17 +24,3 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function autoSubmit() {
-        var formObject = document.forms['dbForm'];
-        formObject.submit();
-    }
-</script>
-@endsection

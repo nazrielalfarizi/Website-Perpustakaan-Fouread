@@ -117,8 +117,9 @@ class PeminjamanController extends Controller
             'user_id' => 'required',
             'buku_id' => 'required',
             'jumlah' => 'required|numeric',
-            'keterangan' => 'max:1000',
-        ]);
+\        ]);
+
+        dd($request);
 
         if ($request['satuanTanggal'] == 'hari') {
             $validatedData['tanggal'] = Carbon::now()->addDays($request['tanggal']);
@@ -156,16 +157,5 @@ class PeminjamanController extends Controller
 
         return back();
     }
-
-    // public function tidaktersedia(Peminjaman $peminjaman)
-    // {
-    //     $stok = $request->stok
-
-    //     if($request['stok'] == '0') {
-    //         $validatedData['stok'] = Carbon::now()->addDays($request['tanggal']);
-    //     } elseif ($request['satuanTanggal'] == 'minggu') {
-    //         $validatedData['tanggal'] = Carbon::now()->addWeeks($request['tanggal']);
-    //     }
-    // }
 
 }

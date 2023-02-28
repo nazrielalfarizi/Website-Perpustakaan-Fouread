@@ -22,9 +22,12 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
         $remember = $request->remember ? true : false;
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt($credentials, $remember) && Auth::user()->role != 'admin') {
             $request->session()->regenerate();
-            Alert::success('Login Berhasil!', 'Selamat Datang di Perpustakaan! 😀');
+            Alert::success('Login Berhasil!', 'Harap isi data tamu terlebih dahulu');
+            return redirect()->intended('/guestbook');
+        }
+         else {
             return redirect()->intended('/');
         }
         Alert::error('Login Gagal!', 'Silahkan Cek Kembali Kredensial Anda!');
